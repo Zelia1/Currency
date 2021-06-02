@@ -7,7 +7,7 @@ from faker import Faker
 
 class Command(BaseCommand):
 
-    help = 'Closes the specified poll for voting'
+    help = 'Closes the specified poll for voting' # noqa
 
     def handle(self, *args, **options):
         for index in range(100):
