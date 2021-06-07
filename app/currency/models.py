@@ -14,3 +14,10 @@ class Rate(models.Model):
     buy = models.DecimalField(max_digits=5, decimal_places=2)
     created = models.DateTimeField(auto_now_add=True)
     source = models.CharField(max_length=64)
+
+
+class Banks(models.Model):
+    name = models.CharField(max_length=60)
+    url = models.CharField(max_length=255)
+    email_from = models.CharField(max_length=60)
+    number_phone = models.CharField(max_length=30)
