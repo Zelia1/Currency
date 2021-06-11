@@ -12,35 +12,23 @@
                 Id
             </th>
             <th>
-                Name
+                Subject
             </th>
             <th>
-                Url
-            </th>
-            <th>
-                email
-            </th>
-            <th>
-                Phone
+                Message
             </th>
         </tr>
 
-        {% for bank in objects %}
+        {% for contactus in objects %}
             <tr>
                 <td>
-                    {{ bank.id }}
+                    {{ contactus.id }}
                 </td>
                 <td>
-                    {{ bank.name }}
+                    {{ contactus.email_from }}
                 </td>
                 <td>
-                    {{ bank.url }}
-                </td>
-                <td>
-                    {{ bank.email_from }}
-                </td>
-                <td>
-                    {{ bank.number_phone }}
+                    {{ contactus.message }}
                 </td>
             </tr>
         {% endfor %}
