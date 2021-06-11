@@ -33,3 +33,21 @@ def contactus_list(request):
         "objects": queryset,
     }
     return render(request, 'contactus_list.html', context=context)
+
+
+def bank_create(request):
+    from currency.forms import BankForm
+    
+    form_data = request.GET
+    if form_data:
+        form = BankForm(form_data)
+        if form.is_valid():
+            form.save()
+    else:
+        form = BankForm()
+    
+    context = {
+        'message': "Bank create",
+        'form': form,
+    }
+    return render(request, 'bank_create.html', context=context)
