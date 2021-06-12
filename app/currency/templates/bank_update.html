@@ -2,17 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create</title>
+    <title>Update</title>
 </head>
 <body>
 
-{{ message }}
+Instance: {{ instance.id }}
 
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Send</button>
 </form>
+
+<a href="/currency/bank/delete/{{ form.instance.id }}/">Delete</a>
 
 </body>
 </html>
