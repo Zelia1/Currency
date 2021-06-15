@@ -8,8 +8,7 @@ from faker import Faker
 
 
 class Command(BaseCommand):
-
-    help = 'Closes the specified poll for voting' # noqa
+    help = 'Closes the specified poll for voting'  # noqa
 
     def handle(self, *args, **options):
         for index in range(100):
@@ -22,6 +21,5 @@ class Command(BaseCommand):
                 url=fake.uri_path(),
                 email_from=f"{name_bank}@gmail.com",
                 number_phone=fake.phone_number(),
-
 
             )
