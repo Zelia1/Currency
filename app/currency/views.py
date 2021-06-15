@@ -3,11 +3,7 @@ from currency.forms import BankForm, ContactUsForm
 from currency.models import Banks, ContactUs  # noqa
 
 from django.http import HttpResponse
-from django.shortcuts import HttpResponseRedirect, get_object_or_404, render
-
-
-def hello_world(request):
-    return HttpResponse("Hello World")
+from django.shortcuts import HttpResponseRedirect, get_object_or_404, render, reverse, redirect
 
 
 def banks(request):
@@ -53,7 +49,7 @@ def contactus_create(request):
         form = ContactUsForm(form_data)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/currency/contactus/')
+            return redirect('currency:contactus-list')
     elif request.method == 'GET':
         form = ContactUsForm()
     context = {
@@ -70,7 +66,7 @@ def contactus_update(request, pk):
         form = ContactUsForm(form_data, instance=instance)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/currency/contactus/')
+            return redirect('currency:contactus-list')
     elif request.method == 'GET':
         form = ContactUsForm(instance=instance)
     context = {
@@ -83,7 +79,7 @@ def contactus_update(request, pk):
 def contact_delete(request, pk):
     instance = get_object_or_404(ContactUs, pk=pk)
     instance.delete()
-    return HttpResponseRedirect('/currency/contactus/')
+    return redirect('currency:contactus-list')
 
 
 def bank_create(request):
@@ -92,7 +88,7 @@ def bank_create(request):
         form = BankForm(form_data)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/currency/banks/')
+            return redirect('currency:banks')
     elif request.method == 'GET':
         form = BankForm()
     context = {
@@ -109,7 +105,7 @@ def bank_update(request, pk):
         form = BankForm(form_data, instance=instance)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/currency/banks/')
+            return redirect('currency:banks')
     elif request.method == 'GET':
         form = BankForm(instance=instance)
 
@@ -123,4 +119,8 @@ def bank_update(request, pk):
 def bank_delete(request, pk):
     instance = get_object_or_404(Banks, pk=pk)
     instance.delete()
-    return HttpResponseRedirect('/currency/banks/')
+    return redirect('currency:banks')
+
+
+def index(request):
+    return render(request, 'index.html')
