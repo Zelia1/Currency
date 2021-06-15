@@ -1,10 +1,9 @@
-from currency.views import (bank_create, bank_delete,  bank_details, bank_update, banks,
+from currency.views import (bank_create, bank_delete, bank_details, bank_update, banks,
                             contact_delete, contactus_create, contactus_details, contactus_list,
-                            contactus_update, hello_world,)
+                            contactus_update, hello_world, )
 
 from django.contrib import admin
 from django.urls import path
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -1,6 +1,6 @@
 from currency.forms import BankForm, ContactUsForm
 
-from currency.models import Banks, ContactUs # noqa
+from currency.models import Banks, ContactUs  # noqa
 
 from django.http import HttpResponse
 from django.shortcuts import HttpResponseRedirect, get_object_or_404, render

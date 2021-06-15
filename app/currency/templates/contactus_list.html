@@ -8,36 +8,42 @@
 
 <a href="/currency/contactus/create/">Create Contact</a>
 
-    <table border="1" width="100%" cellpadding="5">
-        <tr>
-            <th>
-                Id
-            </th>
-            <th>
-                Subject
-            </th>
-            <th>
-                Message
-            </th>
-        </tr>
+<table border="1" width="100%" cellpadding="5">
+    <tr>
+        <th>
+            Id
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Subject
+        </th>
+        <th>
+            Message
+        </th>
+    </tr>
 
-        {% for contactus in objects %}
-            <tr>
-                <td>
-                    {{ contactus.id }}
-                </td>
-                <td>
-                    {{ contactus.email_from }}
-                </td>
-                <td>
-                    {{ contactus.message }}
-                </td>
-                <td>
-                    <a href="/currency/contactus/update/{{ contactus.id }}/">Edit</a>
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
+    {% for contactus in objects %}
+    <tr>
+        <td>
+            {{ contactus.id }}
+        </td>
+        <td>
+            {{ contactus.email_from }}
+        </td>
+        <td>
+            {{ contactus.subject }}
+        </td>
+        <td>
+            {{ contactus.message }}
+        </td>
+        <td>
+            <a href="/currency/contactus/update/{{ contactus.id }}/">Edit</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
 
 
 </body>

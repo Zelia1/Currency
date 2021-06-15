@@ -4,21 +4,21 @@ from django import forms
 
 
 class BankForm(forms.ModelForm):
-	class Meta: # noqa
-		model = Banks # noqa
-		fields = ( # noqa
-			'name', # noqa
-			'url', # noqa
-			'email_from', # noqa
-			'number_phone' # noqa
-		) # noqa
+    class Meta:
+        model = Banks
+        fields = (
+            'name',
+            'url',
+            'email_from',
+            'number_phone'
+        )
 
 
 class ContactUsForm(forms.ModelForm):
-	class Meta: # noqa
-		model = ContactUs # noqa
-		fields = ( # noqa
-			'email_from', # noqa
-			'subject', # noqa
-			'message' # noqa
-		) # noqa
+    class Meta:
+        model = ContactUs
+        fields = (
+            'email_from',
+            'subject',
+            'message'
+        )

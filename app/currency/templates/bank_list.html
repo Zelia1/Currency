@@ -8,48 +8,48 @@
 
 <a href="/currency/bank/create/">Create Bank</a>
 
-    <table border="1" width="100%" cellpadding="5">
-        <tr>
-            <th>
-                Id
-            </th>
-            <th>
-                Name
-            </th>
-            <th>
-                Url
-            </th>
-            <th>
-                email
-            </th>
-            <th>
-                Phone
-            </th>
-        </tr>
+<table border="1" width="100%" cellpadding="5">
+    <tr>
+        <th>
+            Id
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Url
+        </th>
+        <th>
+            email
+        </th>
+        <th>
+            Phone
+        </th>
+    </tr>
 
-        {% for bank in objects %}
-            <tr>
-                <td>
-                    {{ bank.id }}
-                </td>
-                <td>
-                    {{ bank.name }}
-                </td>
-                <td>
-                    {{ bank.url }}
-                </td>
-                <td>
-                    {{ bank.email_from }}
-                </td>
-                <td>
-                    {{ bank.number_phone }}
-                </td>
-                <td>
-                    <a href="/currency/bank/update/{{ bank.id }}/">Edit</a>
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
+    {% for bank in objects %}
+    <tr>
+        <td>
+            {{ bank.id }}
+        </td>
+        <td>
+            {{ bank.name }}
+        </td>
+        <td>
+            {{ bank.url }}
+        </td>
+        <td>
+            {{ bank.email_from }}
+        </td>
+        <td>
+            {{ bank.number_phone }}
+        </td>
+        <td>
+            <a href="/currency/bank/update/{{ bank.id }}/">Edit</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
 
 
 </body>
