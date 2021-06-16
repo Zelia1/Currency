@@ -1,4 +1,4 @@
-from currency.models import Banks, ContactUs
+from currency.models import Banks, ContactUs, Rate
 
 from django import forms
 
@@ -21,4 +21,15 @@ class ContactUsForm(forms.ModelForm):
             'email_from',
             'subject',
             'message'
+        )
+
+
+class RateForm(forms.ModelForm):
+    class Meta:
+        model = Rate
+        fields = (
+            'type',
+            'sale',
+            'buy',
+            'source'
         )

@@ -1,27 +1,23 @@
 from currency.forms import BankForm, ContactUsForm
 
-from currency.models import Banks, ContactUs  # noqa
-
-from django.http import HttpResponse
-from django.shortcuts import HttpResponseRedirect, get_object_or_404, render, reverse, redirect
+from django.views.generic import (CreateView, DeleteView, DetailView,
+                                  ListView, UpdateView)
 
 
-def banks(request):
+from currency.models import Banks, ContactUs, Rate  # noqa
+
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse_lazy
+
+
+class BanksListView(ListView):
+    template_name = 'bank_list.html'
     queryset = Banks.objects.all()
 
-    context = {
-        "objects": queryset,
-    }
-    return render(request, 'bank_list.html', context=context)
 
-
-def bank_details(request, pk):
-    bank = get_object_or_404(Banks, pk=pk)
-
-    context = {
-        "object": bank
-    }
-    return render(request, 'bank_details.html', context=context)
+class BankDetailView(DetailView):
+    template_name = 'bank_details.html'
+    queryset = Banks.objects.all()
 
 
 def contactus_list(request):
@@ -82,44 +78,36 @@ def contact_delete(request, pk):
     return redirect('currency:contactus-list')
 
 
-def bank_create(request):
-    if request.method == 'POST':
-        form_data = request.POST
-        form = BankForm(form_data)
-        if form.is_valid():
-            form.save()
-            return redirect('currency:banks')
-    elif request.method == 'GET':
-        form = BankForm()
-    context = {
-        'message': "Bank create",
-        'form': form,
-    }
-    return render(request, 'bank_create.html', context=context)
+class BankCreateView(CreateView):
+    template_name = 'bank_create.html'
+    model = Banks
+    form_class = BankForm
+
+    success_url = reverse_lazy('currency:banks')
 
 
-def bank_update(request, pk):
-    instance = get_object_or_404(Banks, pk=pk)
-    if request.method == 'POST':
-        form_data = request.POST
-        form = BankForm(form_data, instance=instance)
-        if form.is_valid():
-            form.save()
-            return redirect('currency:banks')
-    elif request.method == 'GET':
-        form = BankForm(instance=instance)
-
-    context = {
-        'message': "Bank update",
-        'form': form,
-    }
-    return render(request, 'bank_update.html', context=context)
+class BankUpdateView(UpdateView):
+    queryset = Banks.objects.all()
+    template_name = 'bank_update.html'
+    success_url = reverse_lazy('currency:banks')
+    model = Banks
+    form_class = BankForm
 
 
-def bank_delete(request, pk):
-    instance = get_object_or_404(Banks, pk=pk)
-    instance.delete()
-    return redirect('currency:banks')
+# def bank_delete(request, pk):
+#     instance = get_object_or_404(Banks, pk=pk)
+#     instance.delete()
+#     return redirect('currency:banks')
+
+
+class BankDeleteView(DeleteView):
+    queryset = Banks.objects.all()
+    success_url = reverse_lazy('currency:banks')
+
+
+class RateListView(ListView):
+    template_name = 'rate_list.html'
+    queryset = Rate.objects.all()
 
 
 def index(request):
