@@ -101,13 +101,16 @@ class BankUpdateView(UpdateView):
 
 
 class BankDeleteView(DeleteView):
+    template_name = 'bank_confirm_delete.html'
     queryset = Banks.objects.all()
     success_url = reverse_lazy('currency:banks')
+
 
 
 class RateListView(ListView):
     template_name = 'rate_list.html'
     queryset = Rate.objects.all()
+
 
 
 def index(request):
