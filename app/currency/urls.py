@@ -1,4 +1,4 @@
-from currency.views import (BankCreateView, BankDetailView, BankUpdateView, BanksListView, BankDeleteView,
+from currency.views import (BankCreateView, BankDeleteView, BankDetailView, BankUpdateView, BanksListView,
                             RateListView, contact_delete, contactus_create, contactus_details, contactus_list,
                             contactus_update)
 
