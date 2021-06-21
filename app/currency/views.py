@@ -8,6 +8,7 @@ from currency.models import Banks, ContactUs, Rate  # noqa
 
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.core.mail import send_mail
 
 
 class BanksListView(ListView):
@@ -36,6 +37,23 @@ class ContactUsCreateView(CreateView):
     form_class = ContactUsForm
 
     success_url = reverse_lazy('currency:contactus-list')
+
+    def form_valid(self, form):
+        data = form.cleaned_data
+        body = f'''
+        From: {data['email_from']}
+        Topic: {data['subject']}
+        
+        Message: {data['message']}
+        '''
+        send_mail(
+            'Hello from contactus!',
+            body,
+            'PavelTest1990@gmail.com',
+            ['zelenskiy.zelia@gmail.com'],
+            fail_silently=False,
+        )
+        return super().form_valid(form)
 
 
 class ContactUsUpdateView(UpdateView):
