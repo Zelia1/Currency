@@ -20,7 +20,7 @@
             </th>
         </tr>
 
-        {% for contactus in objects %}
+        {% for contactus in contactus_list %}
         <tr>
             <td>
                 {{ contactus.id }}
@@ -36,6 +36,9 @@
             </td>
             <td>
                 <a href="{% url 'currency:contactus-update' contactus.id %}">Edit</a>
+            </td>
+            <td>
+                <a href="{% url 'currency:contactus-details' contactus.id %}">Details</a>
             </td>
         </tr>
         {% endfor %}

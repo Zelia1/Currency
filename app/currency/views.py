@@ -6,7 +6,7 @@ from django.views.generic import (CreateView, DeleteView, DetailView,
 
 from currency.models import Banks, ContactUs, Rate  # noqa
 
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import render
 from django.urls import reverse_lazy
 
 
@@ -20,62 +20,36 @@ class BankDetailView(DetailView):
     queryset = Banks.objects.all()
 
 
-def contactus_list(request):
+class ContactUsListView(ListView):
+    template_name = 'contactus_list.html'
     queryset = ContactUs.objects.all()
 
-    context = {
-        "objects": queryset,
-    }
-    return render(request, 'contactus_list.html', context=context)
+
+class ContactusDetailView(DetailView):
+    template_name = 'contactus_details.html'
+    queryset = ContactUs.objects.all()
 
 
-def contactus_details(request, pk):
-    instance = get_object_or_404(ContactUs, pk=pk)
+class ContactUsCreateView(CreateView):
+    template_name = 'contactus_create.html'
+    model = ContactUs
+    form_class = ContactUsForm
 
-    context = {
-        "object": instance
-    }
-
-    return render(request, 'contactus_details.html', context=context)
+    success_url = reverse_lazy('currency:contactus-list')
 
 
-def contactus_create(request):
-    if request.method == 'POST':
-        form_data = request.POST
-        form = ContactUsForm(form_data)
-        if form.is_valid():
-            form.save()
-            return redirect('currency:contactus-list')
-    elif request.method == 'GET':
-        form = ContactUsForm()
-    context = {
-        'message': "Contact create",
-        'form': form,
-    }
-    return render(request, 'contactus_create.html', context=context)
+class ContactUsUpdateView(UpdateView):
+    queryset = ContactUs.objects.all()
+    template_name = 'contactus_update.html'
+    success_url = reverse_lazy('currency:contactus-list')
+    model = ContactUs
+    form_class = ContactUsForm
 
 
-def contactus_update(request, pk):
-    instance = get_object_or_404(ContactUs, pk=pk)
-    if request.method == 'POST':
-        form_data = request.POST
-        form = ContactUsForm(form_data, instance=instance)
-        if form.is_valid():
-            form.save()
-            return redirect('currency:contactus-list')
-    elif request.method == 'GET':
-        form = ContactUsForm(instance=instance)
-    context = {
-        'message': "Contact update",
-        'form': form,
-    }
-    return render(request, 'contactus_update.html', context=context)
-
-
-def contact_delete(request, pk):
-    instance = get_object_or_404(ContactUs, pk=pk)
-    instance.delete()
-    return redirect('currency:contactus-list')
+class ContactDeleteView(DeleteView):
+    template_name = 'contact_confirm_delete.html'
+    queryset = ContactUs.objects.all()
+    success_url = reverse_lazy('currency:contactus-list')
 
 
 class BankCreateView(CreateView):
@@ -92,12 +66,6 @@ class BankUpdateView(UpdateView):
     success_url = reverse_lazy('currency:banks')
     model = Banks
     form_class = BankForm
-
-
-# def bank_delete(request, pk):
-#     instance = get_object_or_404(Banks, pk=pk)
-#     instance.delete()
-#     return redirect('currency:banks')
 
 
 class BankDeleteView(DeleteView):
