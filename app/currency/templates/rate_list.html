@@ -11,41 +11,35 @@
                 Id
             </th>
             <th>
-                Name
+                type
             </th>
             <th>
-                Url
+                sale
             </th>
             <th>
-                email
+                buy
             </th>
             <th>
-                Phone
+                source
             </th>
         </tr>
 
-        {% for bank in banks_list %}
+        {% for rate in rate_list %}
         <tr>
             <td>
-                {{ bank.id }}
+                {{ rate.id }}
             </td>
             <td>
-                {{ bank.name }}
+                {{ rate.type }}
             </td>
             <td>
-                {{ bank.url }}
+                {{ rate.sale }}
             </td>
             <td>
-                {{ bank.email_from }}
+                {{ rate.buy }}
             </td>
             <td>
-                {{ bank.number_phone }}
-            </td>
-            <td>
-                <a href="{% url 'currency:bank-details' bank.id %}">Details</a>
-            </td>
-            <td>
-                <a href="{% url 'currency:bank-update' bank.id %}">Edit</a>
+                {{ rate.source }}
             </td>
         </tr>
         {% endfor %}

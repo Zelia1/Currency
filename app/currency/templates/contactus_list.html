@@ -1,50 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Bank list</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-<a href="/currency/contactus/create/">Create Contact</a>
+{% block main_html_form %}
 
-<table border="1" width="100%" cellpadding="5">
-    <tr>
-        <th>
-            Id
-        </th>
-        <th>
-            Email
-        </th>
-        <th>
-            Subject
-        </th>
-        <th>
-            Message
-        </th>
-    </tr>
+    <a href="{% url 'currency:contactus-create' %}">Create Contact</a>
 
-    {% for contactus in objects %}
-    <tr>
-        <td>
-            {{ contactus.id }}
-        </td>
-        <td>
-            {{ contactus.email_from }}
-        </td>
-        <td>
-            {{ contactus.subject }}
-        </td>
-        <td>
-            {{ contactus.message }}
-        </td>
-        <td>
-            <a href="/currency/contactus/update/{{ contactus.id }}/">Edit</a>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+    <table border="1" width="100%" cellpadding="5">
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Subject
+            </th>
+            <th>
+                Message
+            </th>
+        </tr>
+
+        {% for contactus in contactus_list %}
+        <tr>
+            <td>
+                {{ contactus.id }}
+            </td>
+            <td>
+                {{ contactus.email_from }}
+            </td>
+            <td>
+                {{ contactus.subject }}
+            </td>
+            <td>
+                {{ contactus.message }}
+            </td>
+            <td>
+                <a href="{% url 'currency:contactus-update' contactus.id %}">Edit</a>
+            </td>
+            <td>
+                <a href="{% url 'currency:contactus-details' contactus.id %}">Details</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
 
 
-</body>
-</html>
+{% endblock main_html_form %}
