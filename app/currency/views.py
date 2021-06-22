@@ -6,9 +6,9 @@ from django.views.generic import (CreateView, DeleteView, DetailView,
 
 from currency.models import Banks, ContactUs, Rate  # noqa
 
+from django.core.mail import send_mail
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.core.mail import send_mail
 
 
 class BanksListView(ListView):
@@ -43,7 +43,7 @@ class ContactUsCreateView(CreateView):
         body = f'''
         From: {data['email_from']}
         Topic: {data['subject']}
-        
+        \n
         Message: {data['message']}
         '''
         send_mail(

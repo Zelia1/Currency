@@ -5,6 +5,9 @@ manage_py := python ./app/manage.py
 runserver:
 	$(manage_py) runserver
 
+createsuperuser:
+	$(manage_py) createsuperuser
+
 shell:
 	$(manage_py) shell_plus --print-sql
 
