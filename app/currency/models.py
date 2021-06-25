@@ -20,3 +20,6 @@ class Banks(models.Model):
     url = models.CharField(max_length=255)
     email_from = models.CharField(max_length=60)
     number_phone = models.CharField(max_length=30)
+
+    def __str__(self):
+        return f"Bank object number: {self.id}"
