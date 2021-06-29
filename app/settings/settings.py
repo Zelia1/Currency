@@ -133,6 +133,6 @@ INTERNAL_IPS = [
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 try:
-    from settings.settings_local import *
+    from settings.settings_local import * # noqa
 except ImportError:
-    print('settings were not found!')
+    print('settings were not found!') # noqa
