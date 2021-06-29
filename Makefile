@@ -16,3 +16,6 @@ makemigrations:
 
 migrate:
 	$(manage_py) migrate
+
+worker:
+	cd app && celery -A settings worker -l info

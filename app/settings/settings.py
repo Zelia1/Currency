@@ -132,6 +132,8 @@ INTERNAL_IPS = [
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
+CELERY_BROKER_URL = 'amqp://localhost'
+
 try:
     from settings.settings_local import * # noqa
 except ImportError:
