@@ -1,4 +1,5 @@
 from currency.forms import BankForm, ContactUsForm
+from currency.tasks import send_email_contactus
 
 from django.views.generic import (CreateView, DeleteView, DetailView,
                                   ListView, UpdateView)
@@ -6,7 +7,7 @@ from django.views.generic import (CreateView, DeleteView, DetailView,
 
 from currency.models import Banks, ContactUs, Rate  # noqa
 
-from django.core.mail import send_mail
+
 from django.shortcuts import render
 from django.urls import reverse_lazy
 
@@ -46,13 +47,8 @@ class ContactUsCreateView(CreateView):
         \n
         Message: {data['message']}
         '''
-        send_mail(
-            'Hello from contactus!',
-            body,
-            'PavelTest1990@gmail.com',
-            ['zelenskiy.zelia@gmail.com'],
-            fail_silently=False,
-        )
+        send_email_contactus.delay(body)
+
         return super().form_valid(form)
 
 
