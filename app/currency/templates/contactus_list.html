@@ -18,6 +18,9 @@
             <th>
                 Message
             </th>
+            <th>
+                created
+            </th>
         </tr>
 
         {% for contactus in contactus_list %}
@@ -33,6 +36,9 @@
             </td>
             <td>
                 {{ contactus.message }}
+            </td>
+            <td>
+                {{ contactus.created }}
             </td>
             <td>
                 <a href="{% url 'currency:contactus-update' contactus.id %}">Edit</a>
