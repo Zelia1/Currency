@@ -1,4 +1,5 @@
 from celery import shared_task
+from currency.utils import to_decimal
 
 import requests
 
@@ -17,19 +18,26 @@ def parse_privatbank():
 
     source = 'privatbank'
 
-    for carr in currencies:
-        currencies_type = carr['ccy']
+    for curr in currencies:
+        currencies_type = curr['ccy']
         if currencies_type in available_currency_type:
-            buy = carr['buy']
-            sale = carr['sale']
+            buy = to_decimal(curr['buy'])
+            sale = to_decimal(curr['sale'])
 
-            Rate.objects.create(
-                type=currencies_type,
-                buy=buy,
-                sale=sale,
-                source=source,
-            )
+            previous_rate = Rate.objects.filter(source=source, type=currencies_type).order_by('created').last()
 
+            if (
+                    previous_rate is None or
+                    previous_rate.sale != sale or
+                    previous_rate.buy != buy
+            ):
+
+                Rate.objects.create(
+                    type=currencies_type,
+                    buy=buy,
+                    sale=sale,
+                    source=source,
+                )
 
 
 @shared_task
