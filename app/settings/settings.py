@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+
 from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -148,6 +149,14 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'currency.tasks.parse_monobank',
         'schedule': crontab(minute='*/1'),
     },
+    'parse_eximb': {
+        'task': 'currency.tasks.parse_eximb',
+        'schedule': crontab(minute='*/1'),
+    },
+    'parse_pumb': {
+        'task': 'currency.tasks.parse_pumb',
+        'schedule': crontab(minute='*/1'),
+    }
 }
 
 try:
