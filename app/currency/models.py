@@ -5,6 +5,7 @@ class ContactUs(models.Model):
     email_from = models.EmailField(max_length=254)
     subject = models.CharField(max_length=64)
     message = models.CharField(max_length=254)
+    created = models.DateTimeField(auto_now_add=True, null=True)
 
 
 class Rate(models.Model):
@@ -20,6 +21,7 @@ class Banks(models.Model):
     url = models.CharField(max_length=255)
     email_from = models.CharField(max_length=60)
     number_phone = models.CharField(max_length=30)
+    created = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
         return f"Bank object number: {self.id}"
