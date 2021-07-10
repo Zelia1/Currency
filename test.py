@@ -183,16 +183,5 @@ from fake_useragent import UserAgent
 #         print(buy)
 #         print(sale)
 
-
-url = 'https://www.eximb.com/services/v1/rates/'
-response = requests.get(url)
-response.raise_for_status()
-currencies = response.json()
-available_currency_type = {
-    'USD': choices.RATE_TYPE_USD,
-    'EUR': choices.RATE_TYPE_EUR,
-}
-# data = currencies['rates']['cash']['data']
-print(currencies)
-
-source = 'eximb'
+x = choices.RATE_TYPE_CHOICES
+print(x[0][''])

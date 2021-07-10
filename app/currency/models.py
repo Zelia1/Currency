@@ -27,3 +27,9 @@ class Banks(models.Model):
 
     def __str__(self):
         return f"Bank object number: {self.id}"
+
+
+class Analytics(models.Model):
+    path = models.CharField(max_length=255)
+    status_code = models.CharField(max_length=3)
+    create = models.DateTimeField(auto_now_add=True, null=True)
