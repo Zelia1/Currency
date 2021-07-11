@@ -45,7 +45,10 @@ class Migration(migrations.Migration):
             name='Rate',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('type', models.PositiveSmallIntegerField(choices=[('RATE_TYPE_USD', 'USD'), ('RATE_TYPE_EUR', 'EUR')])),
+                ('type', models.PositiveSmallIntegerField(choices=[
+                    ('RATE_TYPE_USD', 'USD'),
+                    ('RATE_TYPE_EUR', 'EUR')
+                ])),
                 ('sale', models.DecimalField(decimal_places=2, max_digits=5)),
                 ('buy', models.DecimalField(decimal_places=2, max_digits=5)),
                 ('created', models.DateTimeField(auto_now_add=True)),

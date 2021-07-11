@@ -12,8 +12,8 @@ class AnalyticsMiddleware:
         response_cod = response.status_code
 
         Analytics.objects.create(
-            path = request.path,
-            status_code = response_cod,
+            path=request.path,
+            status_code=response_cod,
         )
 
         return response
