@@ -90,7 +90,7 @@ class BankDeleteView(DeleteView):
 
 class RateListView(ListView):
     template_name = 'rate_list.html'
-    queryset = Rate.objects.all()
+    queryset = Rate.objects.all().select_related('bank')
 
 
 def index(request):

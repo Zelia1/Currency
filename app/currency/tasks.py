@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from celery import shared_task
 
 from currency import choices
+from currency import consts
 from currency.utils import to_decimal, valid_number
 
 from django.core.mail import send_mail
@@ -12,20 +13,23 @@ from fake_useragent import UserAgent
 import requests
 
 
-@shared_task
-def parse_privatbank():
-    from currency.models import Rate
-
-    url = 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5'
+def _get_privatbank_currencies(url):
     response = requests.get(url)
     response.raise_for_status()
+    currencies = response.json()
+    return currencies
+
+
+@shared_task
+def parse_privatbank():
+    from currency.models import Rate, Banks
+
+    bank = Banks.objects.get(code_name=consts.CODE_NAME_PRIVATBANK)
+    currencies = _get_privatbank_currencies(bank.url)
     available_currency_type = {
         'USD': choices.RATE_TYPE_USD,
         'EUR': choices.RATE_TYPE_EUR,
     }
-    currencies = response.json()
-
-    source = 'privatbank'
 
     for curr in currencies:
         currencies_type = curr['ccy']
@@ -35,7 +39,7 @@ def parse_privatbank():
             buy = to_decimal(curr['buy'])
             sale = to_decimal(curr['sale'])
 
-            previous_rate = Rate.objects.filter(source=source, type=currencies_type).order_by('created').last()
+            previous_rate = Rate.objects.filter(bank=bank, type=currencies_type).order_by('created').last()
 
             if (
                     previous_rate is None or
@@ -47,7 +51,7 @@ def parse_privatbank():
                     type=currencies_type,
                     buy=buy,
                     sale=sale,
-                    source=source,
+                    bank=bank,
                 )
 
 

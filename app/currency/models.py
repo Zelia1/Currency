@@ -10,21 +10,25 @@ class ContactUs(models.Model):
     created = models.DateTimeField(auto_now_add=True, null=True)
 
 
-class Rate(models.Model):
-
-    type = models.PositiveSmallIntegerField(choices=choices.RATE_TYPE_CHOICES) # noqa
-    sale = models.DecimalField(max_digits=5, decimal_places=2)
-    buy = models.DecimalField(max_digits=5, decimal_places=2)
-    created = models.DateTimeField(auto_now_add=True)
-    source = models.CharField(max_length=64)
-
-
 class Banks(models.Model):
     name = models.CharField(max_length=60)
+    code_name = models.CharField(
+        max_length=64, unique=True,)
     url = models.CharField(max_length=255)
     email_from = models.CharField(max_length=60)
     number_phone = models.CharField(max_length=30)
     created = models.DateTimeField(auto_now_add=True, null=True)
+
+
+class Rate(models.Model):
+    type = models.PositiveSmallIntegerField(choices=choices.RATE_TYPE_CHOICES)  # noqa
+    sale = models.DecimalField(max_digits=5, decimal_places=2)
+    buy = models.DecimalField(max_digits=5, decimal_places=2)
+    created = models.DateTimeField(auto_now_add=True)
+    bank = models.ForeignKey(
+        Banks,
+        on_delete=models.CASCADE,
+    )
 
     def __str__(self):
         return f"Bank object number: {self.id}"
