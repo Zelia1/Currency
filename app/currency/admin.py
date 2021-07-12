@@ -1,4 +1,4 @@
-from currency.models import Banks, ContactUs
+from currency.models import Banks, ContactUs, Rate
 
 from django.contrib import admin
 
@@ -44,3 +44,17 @@ class ContactUsAdmin(admin.ModelAdmin):
 
 
 admin.site.register(ContactUs, ContactUsAdmin)
+
+
+class RateAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'sale',
+        'buy',
+        'type',
+        'created',
+        'source',
+    )
+
+
+admin.site.register(Rate, RateAdmin)

@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 
 from celery import shared_task
 
+from currency import choices
 from currency.utils import to_decimal, valid_number
 
 from django.core.mail import send_mail
@@ -18,7 +19,10 @@ def parse_privatbank():
     url = 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5'
     response = requests.get(url)
     response.raise_for_status()
-    available_currency_type = frozenset(('USD', 'EUR'))
+    available_currency_type = {
+        'USD': choices.RATE_TYPE_USD,
+        'EUR': choices.RATE_TYPE_EUR,
+    }
     currencies = response.json()
 
     source = 'privatbank'
@@ -26,6 +30,8 @@ def parse_privatbank():
     for curr in currencies:
         currencies_type = curr['ccy']
         if currencies_type in available_currency_type:
+            currencies_type = available_currency_type[curr['ccy']]
+
             buy = to_decimal(curr['buy'])
             sale = to_decimal(curr['sale'])
 
@@ -52,7 +58,10 @@ def parse_vkurse():
     url = 'http://vkurse.dp.ua/course.json'
     response = requests.get(url)
     response.raise_for_status()
-    available_currency_type = {'Dollar': 'USD', 'Euro': 'EUR'}
+    available_currency_type = {
+        'Dollar': choices.RATE_TYPE_USD,
+        'Euro': choices.RATE_TYPE_EUR,
+    }
     currencies = response.json()
 
     source = 'vkurse'
@@ -86,7 +95,10 @@ def parse_monobank():
     response = requests.get(url)
     response.json()
     response.raise_for_status()
-    available_currency_type = {840: 'USD', 978: 'EUR'}
+    available_currency_type = {
+        840: choices.RATE_TYPE_USD,
+        978: choices.RATE_TYPE_EUR,
+    }
     available_currency_type_second = 980
     currencies = response.json()
 
@@ -97,7 +109,7 @@ def parse_monobank():
         validity_label_two = curr['currencyCodeB']
 
         if validity_label_one in available_currency_type and validity_label_two == available_currency_type_second:
-            currencies_type = available_currency_type[validity_label_one]
+            currencies_type = available_currency_type[curr['currencyCodeA']]
             buy = to_decimal(curr['rateBuy'])
             sale = to_decimal(curr['rateSell'])
 
@@ -124,14 +136,17 @@ def parse_eximb():
     response = requests.get(url)
     response.raise_for_status()
     currencies = response.json()
-    available_currency_type = frozenset(('USD', 'EUR'))
+    available_currency_type = {
+        'USD': choices.RATE_TYPE_USD,
+        'EUR': choices.RATE_TYPE_EUR,
+    }
     data = currencies['rates']['cash']['data']
 
     source = 'eximb'
 
     for curr in data:
         if curr['code'] in available_currency_type:
-            currencies_type = curr['code']
+            currencies_type = available_currency_type[curr['code']]
             buy = to_decimal(valid_number(curr['buy']))
             sale = to_decimal(valid_number(curr['sell']))
 
@@ -157,9 +172,11 @@ def parse_pumb():
     response = requests.get(url, headers=header)
     soup = BeautifulSoup(response.content, 'html.parser')
     data = soup.find('div', {'class': 'exchange-rate'}).find_all('td', limit=6)
-    available_currency_type = frozenset(('USD', 'EUR'))
+    available_currency_type = {
+        'USD': choices.RATE_TYPE_USD,
+        'EUR': choices.RATE_TYPE_EUR,
+    }
 
-    source = 'pumb'
     currencies = {}
 
     for curr_from_data in data:
@@ -174,13 +191,15 @@ def parse_pumb():
             else:
                 currencies['EUR'].append(curr_from_data.text)
 
+    source = 'pumb'
+
     for curr in currencies:
         from currency.models import Rate
 
         if curr in available_currency_type:
-            currencies_type = curr
-            buy = currencies[curr][0]
-            sale = currencies[curr][1]
+            currencies_type = available_currency_type[curr]
+            buy = to_decimal(currencies[curr][0])
+            sale = to_decimal(currencies[curr][1])
 
             previous_rate = Rate.objects.filter(source=source, type=currencies_type).order_by('created').last()
 

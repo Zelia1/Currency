@@ -1,5 +1,6 @@
 import json
 from decimal import Decimal
+from currency import choices
 
 from bs4 import BeautifulSoup
 import requests
@@ -61,8 +62,6 @@ from currency.utils import to_decimal, valid_number
 #         sale = to_decimal(currencies[curr]['sale'])
 from fake_useragent import UserAgent
 
-
-
 # currencies = []
 # for curr in data:
 #     currencies.append(curr.text)
@@ -76,49 +75,51 @@ from fake_useragent import UserAgent
 #         if curr_currencies in available_currency_type:
 #             data_currencies[curr_currencies] = currencies[3], currencies[4]
 # print(data_currencies)
-url = 'https://about.pumb.ua/ru/info/currency_converter'
-header = {'User-Agent': UserAgent().firefox}
-response = requests.get(url, headers=header)
-soup = BeautifulSoup(response.content, 'html.parser')
-data = soup.find('div', {'class': 'exchange-rate'}).find_all('td', limit=6)
-available_currency_type = frozenset(('USD', 'EUR'))
 
-source = 'pumb'
-currencies = {}
 
-for curr_from_data in data:
-    if data.index(curr_from_data) < 3:
-        if curr_from_data.text in available_currency_type:
-            currencies[curr_from_data.text] = []
-        else:
-            currencies['USD'].append(curr_from_data.text)
-    else:
-        if curr_from_data.text in available_currency_type:
-            currencies[curr_from_data.text] = []
-        else:
-            currencies['EUR'].append(curr_from_data.text)
-
-for curr in currencies:
-    from currency.models import Rate
-
-    if curr in available_currency_type:
-        currencies_type = curr
-        buy = currencies[curr][0]
-        sale = currencies[curr][1]
-
-        previous_rate = Rate.objects.filter(source=source, type=currencies_type).order_by('created').last()
-
-        if (
-                previous_rate is None or
-                previous_rate.sale != sale or
-                previous_rate.buy != buy
-        ):
-            Rate.objects.create(
-                type=currencies_type,
-                buy=buy,
-                sale=sale,
-                source=source,
-            )
+# url = 'https://about.pumb.ua/ru/info/currency_converter'
+# header = {'User-Agent': UserAgent().firefox}
+# response = requests.get(url, headers=header)
+# soup = BeautifulSoup(response.content, 'html.parser')
+# data = soup.find('div', {'class': 'exchange-rate'}).find_all('td', limit=6)
+# available_currency_type = frozenset(('USD', 'EUR'))
+#
+# source = 'pumb'
+# currencies = {}
+#
+# for curr_from_data in data:
+#     if data.index(curr_from_data) < 3:
+#         if curr_from_data.text in available_currency_type:
+#             currencies[curr_from_data.text] = []
+#         else:
+#             currencies['USD'].append(curr_from_data.text)
+#     else:
+#         if curr_from_data.text in available_currency_type:
+#             currencies[curr_from_data.text] = []
+#         else:
+#             currencies['EUR'].append(curr_from_data.text)
+#
+# for curr in currencies:
+#     from currency.models import Rate
+#
+#     if curr in available_currency_type:
+#         currencies_type = curr
+#         buy = currencies[curr][0]
+#         sale = currencies[curr][1]
+#
+#         previous_rate = Rate.objects.filter(source=source, type=currencies_type).order_by('created').last()
+#
+#         if (
+#                 previous_rate is None or
+#                 previous_rate.sale != sale or
+#                 previous_rate.buy != buy
+#         ):
+#             Rate.objects.create(
+#                 type=currencies_type,
+#                 buy=buy,
+#                 sale=sale,
+#                 source=source,
+#             )
 
 # print(currencies)
 # curr = soup.find_all('tbody')
@@ -181,3 +182,6 @@ for curr in currencies:
 #         sale = to_decimal(valid_number(curr['sell']))
 #         print(buy)
 #         print(sale)
+
+x = choices.RATE_TYPE_CHOICES
+print(x[0][''])
