@@ -47,6 +47,16 @@
             <td>
                 {{ rate.created }}
             </td>
+            {% if request.user.is_authenticated %}
+                <td>
+                    <a href="{% url 'currency:rate-details' rate.id %}">Details</a>
+                </td>
+            {% endif %}
+            {% if request.user.is_superuser %}
+                <td>
+                    <a href="{% url 'currency:rate-update' rate.id %}">Edit</a>
+                </td>
+            {% endif %}
         </tr>
         {% endfor %}
     </table>

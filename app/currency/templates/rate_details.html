@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block main_html_form %}
+
+    <p>ID: {{ object.id }} </p>
+    <p>TYPE: {{ object.get_type_display }} </p>
+    <p>SALE: {{ object.sale }} </p>
+    <p>BUY: {{ object.buy }} </p>
+    <p>CREATE: {{ object.created }} </p>
+    <p>BANK: {{ object.bank.name }} </p>
+
+{% endblock main_html_form %}

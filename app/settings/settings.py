@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from django.urls import reverse_lazy
 
 from celery.schedules import crontab
 
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'rangefilter',
 
+    'accounts',
     'currency',
 ]
 
@@ -159,6 +161,10 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': crontab(minute='*/15'),
     }
 }
+
+AUTH_USER_MODEL = 'accounts.User'
+LOGIN_REDIRECT_URL = reverse_lazy('index')
+LOGOUT_REDIRECT_URL = reverse_lazy('index')
 
 try:
     from settings.settings_local import * # noqa

@@ -1,4 +1,4 @@
-from currency.forms import BankForm, ContactUsForm
+from currency.forms import BankForm, ContactUsForm, RateForm
 from currency.tasks import send_email_contactus
 
 from django.views.generic import (CreateView, DeleteView, DetailView,
@@ -91,6 +91,25 @@ class BankDeleteView(DeleteView):
 class RateListView(ListView):
     template_name = 'rate_list.html'
     queryset = Rate.objects.all().select_related('bank')
+
+
+class RateUpdateView(UpdateView):
+    queryset = Rate.objects.all()
+    template_name = 'rate_update.html'
+    success_url = reverse_lazy('currency:rate-list')
+    model = Rate
+    form_class = RateForm
+
+
+class RateDetailView(DetailView):
+    template_name = 'rate_details.html'
+    queryset = Rate.objects.all()
+
+
+class RateDeleteView(DeleteView):
+    template_name = 'rate_confirm_delete.html'
+    queryset = Rate.objects.all()
+    success_url = reverse_lazy('currency:rate-list')
 
 
 def index(request):
