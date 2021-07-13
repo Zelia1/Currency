@@ -53,7 +53,7 @@ class RateAdmin(admin.ModelAdmin):
         'buy',
         'type',
         'created',
-        'source',
+        'bank',
     )
 
 
