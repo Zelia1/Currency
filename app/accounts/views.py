@@ -1,12 +1,14 @@
+from accounts.models import User
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
-
-# Create your views here.
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView
+# from django.shortcuts import render
 
-from accounts.models import User
+# Create your views here.
+
+
+# from django.contrib.auth.forms import PasswordResetForm
 
 
 class MyProfile(LoginRequiredMixin, UpdateView):
@@ -18,8 +20,12 @@ class MyProfile(LoginRequiredMixin, UpdateView):
         'last_name',
     )
 
-
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.filter(pk=self.request.user.pk)
         return queryset
+
+
+# class ResetPassword(PasswordResetForm):
+#     queryset = User.objects.all()
+#     template_name = 'registration/password_reset_form.html'

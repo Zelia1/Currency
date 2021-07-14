@@ -1,10 +1,9 @@
 from currency.views import (BankCreateView, BankDeleteView, BankDetailView, BankUpdateView, BanksListView,
                             ContactDeleteView, ContactUsCreateView, ContactUsListView,
-                            ContactUsUpdateView, ContactusDetailView, RateDetailView, RateDeleteView,
+                            ContactUsUpdateView, ContactusDetailView, RateDeleteView, RateDetailView,
                             RateListView, RateUpdateView)
 
 from django.urls import path
-from django.contrib.auth import views as auth_views
 
 app_name = 'currency'
 
