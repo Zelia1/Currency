@@ -1,8 +1,9 @@
+from accounts.forms import SignUpForm
 from accounts.models import User
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, CreateView
 # from django.shortcuts import render
 
 # Create your views here.
@@ -24,6 +25,13 @@ class MyProfile(LoginRequiredMixin, UpdateView):
         queryset = super().get_queryset()
         queryset = queryset.filter(pk=self.request.user.pk)
         return queryset
+
+
+class SignUp(CreateView):
+    model = User
+    template_name = 'signup.html'
+    success_url = reverse_lazy('index')
+    form_class = SignUpForm
 
 
 # class ResetPassword(PasswordResetForm):
