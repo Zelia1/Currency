@@ -1,12 +1,12 @@
+from annoying.functions import get_object_or_None
 from accounts.forms import SignUpForm
 from accounts.models import User
 
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import UpdateView, CreateView
-# from django.shortcuts import render
+from django.views.generic import UpdateView, CreateView, RedirectView
 
-# Create your views here.
 
 
 # from django.contrib.auth.forms import PasswordResetForm
@@ -33,6 +33,24 @@ class SignUp(CreateView):
     success_url = reverse_lazy('index')
     form_class = SignUpForm
 
+
+class ActivateAccount(RedirectView):
+    pattern_name = 'index'
+
+    def get_redirect_url(self, *args, **kwargs):
+        activation_key = kwargs.pop('activation_key')
+        user = get_object_or_None(User.objects.only('is_active'), username=activation_key)
+
+        if user:
+            if user.is_active:
+                messages.warning(self.request, 'Your account is already active.')
+            else:
+                messages.info(self.request, 'Thanks for activating your account.')
+                user.is_active = True
+                user.save(update_fields=('is_active',))
+
+        response = super().get_redirect_url(*args, **kwargs)
+        return response
 
 # class ResetPassword(PasswordResetForm):
 #     queryset = User.objects.all()

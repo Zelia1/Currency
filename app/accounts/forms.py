@@ -1,8 +1,9 @@
 import uuid
 
 from django.conf import settings
+from django.shortcuts import reverse
 from accounts.tasks import send_registration_email
-
+from accounts.tokens import account_activation_token
 from django import forms
 
 from accounts.models import User
@@ -30,17 +31,19 @@ class SignUpForm(forms.ModelForm):
     def save(self, commit=True):
         instance = super().save(commit=False)
 
+        # tokens = account_activation_token.make_token(User.objects.last())
         instance.username = str(uuid.uuid4())
         instance.is_active = False
+        instance.set_password(self.cleaned_data['password_one'])
 
         if commit:
             instance.save()
 
         body = f"""
         Activate your account
-        {settings.DOMAIN}/activate/dsadsa-asd
+        {settings.DOMAIN}{reverse('account:activate-account', args=(instance.username,))}
         """
 
-        send_registration_email.delay('TODO', self.cleaned_data['email'])
+        send_registration_email.delay(body, self.cleaned_data['email'])
 
         return instance

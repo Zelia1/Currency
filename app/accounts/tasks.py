@@ -3,6 +3,7 @@ from django.conf import settings
 
 from django.core.mail import send_mail
 
+
 @shared_task
 def send_registration_email(body, email_to):
     title = 'Activate your account!'
