@@ -19,5 +19,5 @@ urlpatterns = [
         template_name='registration/password_reset_complete.html'),
          name='reset-password-complete'),
     path('signup/', views.SignUp.as_view(), name='signup'),
-    path('activate/account/<uuid:activation_key>/', views.ActivateAccount.as_view(), name='activate-account'),
+    path('activate/account/<uuid:activation_key>/<token>/', views.ActivateAccount.as_view(), name='activate-account'),
 ]
