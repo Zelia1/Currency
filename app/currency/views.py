@@ -112,5 +112,14 @@ class RateDeleteView(DeleteView):
     success_url = reverse_lazy('currency:rate-list')
 
 
+# class RateDeleteView(UserPassesTestMixin, DeleteView):
+#     template_name = 'rate_confirm_delete.html'
+#     queryset = Rate.objects.all()
+#     success_url = reverse_lazy('currency:rate-list')
+#
+#     def superuser_validity_check(self):
+#         self.queryset = self.get_object()
+#         return self.request.user.is_superuser
+
 def index(request):
     return render(request, 'index.html')

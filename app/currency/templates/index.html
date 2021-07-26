@@ -11,7 +11,7 @@
         <a href="{% url 'account:my-profile' request.user.pk %}">My Profile</a>
     {% else %}
         <a href="{% url 'login' %}">Login</a>
-        <a href="#">SingUp</a>
+        <a href="{% url 'account:signup' %}">SingUp</a>
     {% endif %}
 
 {% endblock main_html_form %}
