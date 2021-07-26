@@ -1,18 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Create contact</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
+{% load crispy_forms_filters %}
+
+{% block main_html_form %}
 {{ message }}
 
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Send</button>
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-success">Send</button>
 </form>
 
-</body>
-</html>
+{% endblock main_html_form %}

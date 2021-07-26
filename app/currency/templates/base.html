@@ -1,22 +1,37 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
 </head>
 <body>
+<div class="container">
+    <div class="col-12">
+        <hr class="mt-0 mb-4">
+        {% include 'includes/navbar.html' %}
 
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li
-    {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li
+                    {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
 
-{% block main_html_form %}
-{% endblock main_html_form %}
+        {% block main_html_form %}
+        {% endblock main_html_form %}
 
+
+        <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    </div>
+</div>
 </body>
 </html>

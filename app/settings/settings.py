@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
     'accounts',
     'currency',
+    'crispy_forms',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -126,6 +127,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / '..' / 'static_content'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -165,11 +168,17 @@ CELERY_BEAT_SCHEDULE = {
     }
 }
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 AUTH_USER_MODEL = 'accounts.User'
 LOGIN_REDIRECT_URL = reverse_lazy('index')
 LOGOUT_REDIRECT_URL = reverse_lazy('index')
 
 DOMAIN = 'http://127.0.0.1:8000'
+
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'currency' / 'static',
+# ]
 
 try:
     from settings.settings_local import * # noqa

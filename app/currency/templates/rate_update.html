@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_filters %}
+
 {% block main_html_form %}
-    Instance: {{ instance.id }}
+Instance: {{ instance.id }}
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save</button>
-    </form>
-
-    <a href="{% url 'currency:rate-delete' form.instance.id %}">Delete</a>
-
+<form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-success">Save</button>
+</form>
+<div class="text-right">
+    <a href="{% url 'currency:rate-delete' form.instance.id %}" class="btn btn-danger" role="button">Delete</a>
+</div>
 {% endblock main_html_form %}

@@ -112,6 +112,14 @@ class RateDeleteView(DeleteView):
     success_url = reverse_lazy('currency:rate-list')
 
 
+class RateCreateView(CreateView):
+    template_name = 'rate_create.html'
+    model = Rate
+    form_class = RateForm
+
+    success_url = reverse_lazy('currency:rate-list')
+
+
 # class RateDeleteView(UserPassesTestMixin, DeleteView):
 #     template_name = 'rate_confirm_delete.html'
 #     queryset = Rate.objects.all()
