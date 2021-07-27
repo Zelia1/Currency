@@ -1,5 +1,6 @@
-from currency.models import Banks, ContactUs, Rate
 from crispy_forms.helper import FormHelper
+
+from currency.models import Banks, ContactUs, Rate
 
 from django import forms
 
@@ -11,7 +12,8 @@ class BankForm(forms.ModelForm):
             'name',
             'url',
             'email_from',
-            'number_phone'
+            'number_phone',
+            'avatar',
         )
 
     def __init__(self, *args, **kwargs):
