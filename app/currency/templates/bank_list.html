@@ -41,12 +41,16 @@
             <td>
                 {{ bank.number_phone }}
             </td>
-            <td>
-                <a href="{% url 'currency:bank-details' bank.id %}">Details</a>
-            </td>
-            <td>
-                <a href="{% url 'currency:bank-update' bank.id %}">Edit</a>
-            </td>
+            {% if request.user.is_authenticated %}
+                <td>
+                    <a href="{% url 'currency:bank-details' bank.id %}">Details</a>
+                </td>
+            {% endif %}
+            {% if request.user.is_superuser %}
+                <td>
+                    <a href="{% url 'currency:bank-update' bank.id %}">Edit</a>
+                </td>
+            {% endif %}
         </tr>
         {% endfor %}
     </table>
