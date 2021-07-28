@@ -1,4 +1,6 @@
 from currency.views import (index)
+from api.views import BanksList
+    # ContactUsList, ContactUsDetails
 
 import debug_toolbar
 
@@ -10,6 +12,10 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    path('api/banks', BanksList.as_view(), ),
+    path('api/', include('api.urls')),
+
     path('', index, name='index'),
     path('auth/', include('django.contrib.auth.urls')),
     path('currency/', include('currency.urls')),

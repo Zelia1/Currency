@@ -41,10 +41,11 @@ INSTALLED_APPS = [
     'django_extensions',
     'debug_toolbar',
     'rangefilter',
+    'rest_framework',
+    'crispy_forms',
 
     'accounts',
     'currency',
-    'crispy_forms',
 
     'django.contrib.admin',
     'django.contrib.auth',

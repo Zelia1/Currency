@@ -1,13 +1,15 @@
+import json
+
 from currency.forms import BankForm, ContactUsForm, RateForm
 from currency.tasks import send_email_contactus
 
 from django.views.generic import (CreateView, DeleteView, DetailView,
-                                  ListView, UpdateView)
+                                  ListView, UpdateView, View)
 
 
 from currency.models import Banks, ContactUs, Rate  # noqa
 
-
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 
@@ -131,3 +133,22 @@ class RateCreateView(CreateView):
 
 def index(request):
     return render(request, 'index.html')
+
+
+# class BankListApi(View):
+#
+#     def get(self, request):
+#         import json
+#         banks = Banks.objects.all()
+#         results = []
+#         for bank in banks:
+#             results.append({
+#                 'id': bank.id,
+#                 'name': bank.name,
+#                 'url': bank.url,
+#                 'email_from': bank.email_from,
+#                 'number_phone': bank.number_phone,
+#                 'created': str(bank.created),
+#             })
+#         # return HttpResponse(json.dumps((results)), content_type='application/json')
+#         return JsonResponse(results, safe=False)
