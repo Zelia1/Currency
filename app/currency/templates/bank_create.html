@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_filters %}
+
 {% block main_html_form %}
     {{ message }}
 
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form|crispy}}
         <button type="submit">Send</button>
     </form>
 

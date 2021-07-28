@@ -1,17 +1,53 @@
 {% extends 'base.html' %}
 
 {% block main_html_form %}
-
-    <a href="{% url 'currency:contactus-list' %}">Contactus-list</a>
-    <a href="{% url 'currency:banks' %}">Banks-list</a>
-    <a href="{% url 'currency:rate-list' %}">Rate-list</a>
-
-    {% if request.user.is_authenticated %}
-        <a href="{% url 'logout' %}">Logout</a>
-        <a href="{% url 'account:my-profile' request.user.pk %}">My Profile</a>
-    {% else %}
-        <a href="{% url 'login' %}">Login</a>
-        <a href="{% url 'account:signup' %}">SingUp</a>
-    {% endif %}
-
+<!-- HEADER -->
+<header>
+  <div class="container">
+    2
+  </div>
+</header>
+<!-- ОСНОВНОЕ СОДЕРЖИМОЕ -->
+<section>
+  <div class="container">
+    <div class="row">
+      <!-- MAIN -->
+      <main class="col-md-8 col-lg-9">
+      1
+      </main>
+      <!-- ASIDE -->
+      <div class="col-md-4 col-lg-3">
+        <div class="row">
+          <!-- ASIDE #1 -->
+          <aside class="col-sm-6 col-md-12">
+        3
+          </aside>
+          <!-- ASIDE #2 -->
+          <aside class="col-sm-6 col-md-12">
+        4
+          </aside>
+        <div class="row">
+      </div>
+    </div>
+  </div>
+</section>
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+  5
+  </div>
+</footer>
 {% endblock main_html_form %}
+
+
+<!--<a href="{% url 'currency:contactus-list' %}">Contactus-list</a>-->
+<!--<a href="{% url 'currency:banks' %}">Banks-list</a>-->
+<!--<a href="{% url 'currency:rate-list' %}">Rate-list</a>-->
+
+<!--{% if request.user.is_authenticated %}-->
+<!--<a href="{% url 'logout' %}">Logout</a>-->
+<!--<a href="{% url 'account:my-profile' request.user.pk %}">My Profile</a>-->
+<!--{% else %}-->
+<!--<a href="{% url 'login' %}">Login</a>-->
+<!--<a href="{% url 'account:signup' %}">SingUp</a>-->
+<!--{% endif %}-->

@@ -1,3 +1,5 @@
+from crispy_forms.helper import FormHelper
+
 from currency.models import Banks, ContactUs, Rate
 
 from django import forms
@@ -10,8 +12,13 @@ class BankForm(forms.ModelForm):
             'name',
             'url',
             'email_from',
-            'number_phone'
+            'number_phone',
+            'avatar',
         )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
 
 
 class ContactUsForm(forms.ModelForm):
@@ -23,6 +30,10 @@ class ContactUsForm(forms.ModelForm):
             'message'
         )
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+
 
 class RateForm(forms.ModelForm):
     class Meta:
@@ -31,5 +42,9 @@ class RateForm(forms.ModelForm):
             'type',
             'sale',
             'buy',
-            'bank'
+            'bank',
         )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()

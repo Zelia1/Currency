@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
 
-{% block main_html_form %}
-    Update My Profile
+{% load crispy_forms_filters %}
 
-    <form method="post">
+{% block main_html_form %}
+
+    <img class="rounded mx-auto d-block rounded-circle" src="{{ request.user.get_avatar_user }}" alt="Cinque Terre">
+
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form|crispy }}
         <button type="submit">Save</button>
         {% if request.user.is_authenticated %}
             <a href="{% url 'account:reset-password' %}">Reset password</a>
