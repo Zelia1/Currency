@@ -1,10 +1,13 @@
 from rest_framework import generics, viewsets
 from currency.models import Banks, ContactUs
+from api.filters import ContactUsFilter
 from api.serializers import BanksSerializer, ContactUsSerializer
-from api.paginators import BanksPagination
+from api.paginators import BanksPagination, ContactUsPagination
 # from django.core.mail import EmailMessage
 from django.core.mail import send_mail
 from django.conf import settings
+from django_filters import rest_framework as filters
+from rest_framework import filters as rest_framework_filters
 
 
 class BanksList(generics.ListAPIView):
@@ -28,6 +31,10 @@ class BanksList(generics.ListAPIView):
 class ContactUsViewSet(viewsets.ModelViewSet):
     queryset = ContactUs.objects.all().order_by('-created')
     serializer_class = ContactUsSerializer
+    pagination_class = ContactUsPagination
+    filterset_class = ContactUsFilter
+    filter_backends = (filters.DjangoFilterBackend, rest_framework_filters.OrderingFilter,)
+    ordering_fields = ['id', 'email_from', 'subject', 'message', 'created']
 
     # def create(self, request, *args, **kwargs):
     #     response = super(ContactUsViewSet, self).create(request, *args, **kwargs)
