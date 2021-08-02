@@ -1,6 +1,6 @@
-from currency.views import (index)
 from api.views import BanksList
-    # ContactUsList, ContactUsDetails
+
+from currency.views import (index)
 
 import debug_toolbar
 

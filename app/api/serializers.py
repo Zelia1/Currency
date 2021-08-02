@@ -1,5 +1,6 @@
-from rest_framework import serializers
 from currency.models import Banks, ContactUs, Rate
+
+from rest_framework import serializers
 
 
 class RateSerializer(serializers.ModelSerializer):
@@ -8,15 +9,13 @@ class RateSerializer(serializers.ModelSerializer):
         model = Rate
         fields = (
             'id',
-            'name',
             'sale',
             'buy',
-            'type'
         )
 
 
 class BanksSerializer(serializers.ModelSerializer):
-    # rate = RateSerializer()
+    rate_set = RateSerializer(many=True)
 
     class Meta:
         model = Banks
@@ -26,8 +25,8 @@ class BanksSerializer(serializers.ModelSerializer):
             'url',
             'email_from',
             'number_phone',
-            'created'
-            # 'rate'
+            'created',
+            'rate_set'
         )
 
 
@@ -42,5 +41,3 @@ class ContactUsSerializer(serializers.ModelSerializer):
             'message',
             'created'
         )
-
-

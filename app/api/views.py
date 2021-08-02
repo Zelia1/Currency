@@ -1,17 +1,23 @@
-from rest_framework import generics, viewsets
-from currency.models import Banks, ContactUs
 from api.filters import ContactUsFilter
-from api.serializers import BanksSerializer, ContactUsSerializer
 from api.paginators import BanksPagination, ContactUsPagination
-# from django.core.mail import EmailMessage
-from django.core.mail import send_mail
+from api.serializers import BanksSerializer, ContactUsSerializer
+from api.throttles import AnonUserRateThrottle
+
+from currency.models import Banks, ContactUs
+
 from django.conf import settings
+from django.core.mail import send_mail
+
 from django_filters import rest_framework as filters
+
 from rest_framework import filters as rest_framework_filters
+from rest_framework import generics, viewsets
+# from django.core.mail import EmailMessage
 
 
 class BanksList(generics.ListAPIView):
-    queryset = Banks.objects.all()
+
+    queryset = Banks.objects.all().prefetch_related('rate_set')
     serializer_class = BanksSerializer
     pagination_class = BanksPagination
 
@@ -32,9 +38,14 @@ class ContactUsViewSet(viewsets.ModelViewSet):
     queryset = ContactUs.objects.all().order_by('-created')
     serializer_class = ContactUsSerializer
     pagination_class = ContactUsPagination
+    throttle_classes = [AnonUserRateThrottle]
     filterset_class = ContactUsFilter
-    filter_backends = (filters.DjangoFilterBackend, rest_framework_filters.OrderingFilter,)
+    filter_backends = (filters.DjangoFilterBackend,
+                       rest_framework_filters.OrderingFilter,
+                       rest_framework_filters.SearchFilter,
+                       )
     ordering_fields = ['id', 'email_from', 'subject', 'message', 'created']
+    search_fields = ('id', 'email_from', 'subject', 'message',)
 
     # def create(self, request, *args, **kwargs):
     #     response = super(ContactUsViewSet, self).create(request, *args, **kwargs)

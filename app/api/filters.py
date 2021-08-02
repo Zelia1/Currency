@@ -1,5 +1,6 @@
-from django_filters import rest_framework as filters
 from currency.models import ContactUs
+
+from django_filters import rest_framework as filters
 
 
 class ContactUsFilter(filters.FilterSet):
