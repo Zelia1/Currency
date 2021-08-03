@@ -1,9 +1,9 @@
-from api.filters import ContactUsFilter
-from api.paginators import BanksPagination, ContactUsPagination
-from api.serializers import BanksSerializer, ContactUsSerializer
+from api.filters import ContactUsFilter, RateFilter
+from api.paginators import BanksPagination, ContactUsPagination, RatePagination
+from api.serializers import BanksSerializer, ContactUsSerializer, RateSerializer
 from api.throttles import AnonUserRateThrottle
 
-from currency.models import Banks, ContactUs
+from currency.models import Banks, ContactUs, Rate
 
 from django.conf import settings
 from django.core.mail import send_mail
@@ -74,3 +74,17 @@ class ContactUsViewSet(viewsets.ModelViewSet):
 class ContactUsDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = ContactUs.objects.all()
     serializer_class = ContactUsSerializer
+
+
+class RateViewSet(viewsets.ModelViewSet):
+    queryset = Rate.objects.all()
+    serializer_class = RateSerializer
+    pagination_class = RatePagination
+    throttle_classes = [AnonUserRateThrottle]
+    filterset_class = RateFilter
+    filter_backends = (filters.DjangoFilterBackend,
+                       rest_framework_filters.OrderingFilter,
+                       rest_framework_filters.SearchFilter,
+                       )
+    ordering_fields = ['id', 'buy', 'sale', 'type', 'created']
+    search_fields = ('id', 'buy', 'sale', 'type',)

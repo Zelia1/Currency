@@ -25,3 +25,7 @@ beat:
 
 show_urls:
 	$(manage_py) show_urls
+
+pytest:
+	pytest app/tests/
+# 	--cov=app --cov-report html && coverage report --fail-under=71.3910
