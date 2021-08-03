@@ -2,11 +2,10 @@ from currency.forms import BankForm, ContactUsForm, RateForm
 from currency.tasks import send_email_contactus
 
 from django.views.generic import (CreateView, DeleteView, DetailView,
-                                  ListView, UpdateView)
+                                  ListView, UpdateView,)
 
 
 from currency.models import Banks, ContactUs, Rate  # noqa
-
 
 from django.shortcuts import render
 from django.urls import reverse_lazy

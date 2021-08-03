@@ -23,4 +23,6 @@ urlpatterns = [
     path('bank/create/', BankCreateView.as_view(), name='bank-create'),
     path('bank/update/<int:pk>/', BankUpdateView.as_view(), name='bank-update'),
     path('bank/delete/<int:pk>/', BankDeleteView.as_view(), name='bank-delete'),
+
+    # path('api/banks/', BankListApi.as_view())
 ]
