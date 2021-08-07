@@ -2,10 +2,10 @@ from unittest.mock import MagicMock
 
 from currency import consts
 from currency.models import Banks, Rate
-from currency.tasks import parse_monobank # noqa
 
 
 def test_parse_monobank(mocker):
+    from currency.tasks import parse_monobank
 
     json_mock = lambda: [ # noqa
         {"currencyCodeA": 840, "currencyCodeB": 980, "date": 1628284206, "rateBuy": 26.77, "rateSell": 26.9702},

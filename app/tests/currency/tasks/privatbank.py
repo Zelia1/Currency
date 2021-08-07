@@ -2,10 +2,10 @@ from unittest.mock import MagicMock
 
 from currency import consts
 from currency.models import Banks, Rate
-from currency.tasks import parse_privatbank # noqa
 
 
 def test_parse_privatbank(mocker):
+    from currency.tasks import parse_privatbank
 
     json_mock = lambda: [ # noqa
         {"ccy": "USD", "base_ccy": "UAH", "buy": "26.80000", "sale": "27.20000"},
