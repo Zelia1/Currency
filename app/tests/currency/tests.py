@@ -1,7 +1,7 @@
-import pytest
-
 from currency import choices
 from currency.models import Banks, Rate
+
+import pytest
 
 
 @pytest.mark.skip
