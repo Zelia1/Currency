@@ -2,10 +2,10 @@ from unittest.mock import MagicMock
 
 from currency import consts
 from currency.models import Banks, Rate
-from currency.tasks import parse_vkurse
 
 
 def test_parse_vkurse(mocker):
+    from currency.tasks import parse_vkurse
 
     json_mock = lambda: { # noqa
         "Dollar": {"buy": "26.85", "sale": "27.00"},

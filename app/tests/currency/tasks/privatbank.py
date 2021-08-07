@@ -2,7 +2,7 @@ from unittest.mock import MagicMock
 
 from currency import consts
 from currency.models import Banks, Rate
-from currency.tasks import parse_privatbank
+from currency.tasks import parse_privatbank # noqa
 
 
 def test_parse_privatbank(mocker):

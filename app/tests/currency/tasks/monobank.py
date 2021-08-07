@@ -2,7 +2,7 @@ from unittest.mock import MagicMock
 
 from currency import consts
 from currency.models import Banks, Rate
-from currency.tasks import parse_monobank
+from currency.tasks import parse_monobank # noqa
 
 
 def test_parse_monobank(mocker):
