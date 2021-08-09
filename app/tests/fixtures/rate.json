@@ -1,0 +1,13 @@
+[
+  {
+    "model": "currency.rate",
+    "pk": 3,
+    "fields": {
+      "type": 0,
+      "sale": "24.00",
+      "buy": "26.00",
+      "created":"2021-08-02T15:16:54.240Z",
+      "bank": 2
+    }
+  }
+]

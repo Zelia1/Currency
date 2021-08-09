@@ -1,0 +1,15 @@
+[
+  {
+    "model": "currency.banks",
+    "pk": 2,
+    "fields": {
+      "avatar": "",
+      "name": "test_name",
+      "code_name": "code name",
+      "url": "privat/url",
+      "email_from": "privat.gmail.com",
+      "number_phone": "2345546567",
+      "created": "2021-07-27T19:58:09.313Z"
+    }
+  }
+]

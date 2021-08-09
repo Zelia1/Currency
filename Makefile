@@ -25,3 +25,9 @@ beat:
 
 show_urls:
 	$(manage_py) show_urls
+
+pytest:
+	pytest app/tests/ --cov=app --cov-report html && coverage report --fail-under=60
+
+show-coverage:  ## open coverage HTML report in default browser
+	python3 -c "import webbrowser; webbrowser.open('.pytest_cache/coverage/index.html')"

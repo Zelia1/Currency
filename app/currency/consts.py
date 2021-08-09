@@ -1,1 +1,3 @@
 CODE_NAME_PRIVATBANK = 'privat'
+CODE_NAME_MONOBANK = 'monobank'
+CODE_NAME_VKURSE = 'vkurse'

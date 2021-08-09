@@ -3,7 +3,7 @@ from currency.models import Banks, ContactUs, Rate
 from rest_framework import serializers
 
 
-class RateSerializer(serializers.ModelSerializer):
+class RateSetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Rate
@@ -15,7 +15,7 @@ class RateSerializer(serializers.ModelSerializer):
 
 
 class BanksSerializer(serializers.ModelSerializer):
-    rate_set = RateSerializer(many=True)
+    rate_set = RateSetSerializer(many=True)
 
     class Meta:
         model = Banks
@@ -40,4 +40,18 @@ class ContactUsSerializer(serializers.ModelSerializer):
             'subject',
             'message',
             'created'
+        )
+
+
+class RateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Rate
+        fields = (
+            'id',
+            'type',
+            'sale',
+            'buy',
+            'created',
+            'bank'
         )

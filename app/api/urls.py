@@ -1,4 +1,4 @@
-from api.views import ContactUsViewSet
+from api.views import ContactUsViewSet, RateViewSet
 
 from django.urls import path, re_path
 
@@ -28,6 +28,7 @@ schema_view = get_schema_view(
 
 router = DefaultRouter()
 router.register(r'contacts', ContactUsViewSet, basename='contact')
+router.register(r'rates', RateViewSet, basename='rate')
 
 urlpatterns = [
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
