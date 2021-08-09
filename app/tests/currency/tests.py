@@ -66,6 +66,7 @@ def test_create_rate_success(client):
     assert Rate.objects.count() == rate_initial_count + 1
 
 
+@pytest.mark.skip
 def test_create_contact_us(client, mailoutbox, settings):
     form_data = {
         'email_from': 'PavelTest1990@gmail.com',
