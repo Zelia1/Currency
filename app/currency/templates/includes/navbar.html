@@ -13,6 +13,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'currency:rate-list' %}">Rate</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'currency:rate-archive-list' %}">Rate Archive</a>
+            </li>
         </ul>
         <span class="navbar-text">
             {% if request.user.is_authenticated %}

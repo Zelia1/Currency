@@ -1,7 +1,5 @@
 from decimal import Decimal
 
-# import requests
-
 
 def to_decimal(number: str) -> Decimal:
     return Decimal(number).quantize(Decimal('0.01'))

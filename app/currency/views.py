@@ -5,7 +5,7 @@ from django.views.generic import (CreateView, DeleteView, DetailView,
                                   ListView, UpdateView,)
 
 
-from currency.models import Banks, ContactUs, Rate  # noqa
+from currency.models import Banks, ContactUs, Rate, RateArchive  # noqa
 
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -130,3 +130,9 @@ class RateCreateView(CreateView):
 
 def index(request):
     return render(request, 'index.html')
+
+
+class RateArchiveListView(ListView):
+    template_name = 'rate_archive_list.html'
+    queryset = RateArchive.objects.all()
+

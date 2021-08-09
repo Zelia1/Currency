@@ -193,7 +193,7 @@ url = 'https://api.privatbank.ua/p24api/exchange_rates?json&date=01.12.2014'
 response = requests.get(url)
 response.raise_for_status()
 currency_list = response.json()['exchangeRate']
-currency_list_data = response.json()['date']
+currency_data = response.json()['date']
 
 validated_curr = ["USD", "EUR"]
 validated_data_currency = []
@@ -201,4 +201,5 @@ for curr in validated_curr:
     for row in currency_list:
         if curr in row['currency']:
             validated_data_currency.append(row)
-            # print(f'{row}, {row['date'] = currency_list_data}')
+            row['date'] = currency_data
+print(validated_data_currency)

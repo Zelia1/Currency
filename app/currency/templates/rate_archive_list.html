@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block main_html_form %}
+{{ message }}
+
+<table class="table table-striped">
+    <caption>List of users</caption>
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Type</th>
+            <th scope="col">Sale</th>
+            <th scope="col">Buy</th>
+            <th scope="col">Date</th>
+            <th scope="col">create</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for rate in ratearchive_list %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ rate.id }}</td>
+                <td>{{ rate.name }}</td>
+                <td>{{ rate.get_type_display }}</td>
+                <td>{{ rate.sale }}</td>
+                <td>{{ rate.buy }}</td>
+                <td>{{ rate.date }}</td>
+                <td>{{ rate.created }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock main_html_form %}
