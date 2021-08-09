@@ -4,7 +4,7 @@ from currency import choices
 
 from bs4 import BeautifulSoup
 import requests
-from currency.utils import to_decimal, valid_number
+# from currency.utils import to_decimal, valid_number
 
 # # from currency.models import Rate
 #
@@ -183,5 +183,7 @@ from fake_useragent import UserAgent
 #         print(buy)
 #         print(sale)
 
-x = choices.RATE_TYPE_CHOICES
-print(x[0][''])
+# x = choices.RATE_TYPE_CHOICES
+# print(x[0][''])
+
+
