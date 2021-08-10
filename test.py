@@ -186,20 +186,44 @@ from fake_useragent import UserAgent
 # x = choices.RATE_TYPE_CHOICES
 # print(x[0][''])
 
+###############################################################################
 
-import requests
+# import requests
+#
+# url = 'https://api.privatbank.ua/p24api/exchange_rates?json&date=01.12.2014'
+# response = requests.get(url)
+# response.raise_for_status()
+# currency_list = response.json()['exchangeRate']
+# currency_data = response.json()['date']
+#
+# validated_curr = ["USD", "EUR"]
+# validated_data_currency = []
+# for curr in validated_curr:
+#     for row in currency_list:
+#         if curr in row['currency']:
+#             validated_data_currency.append(row)
+#             row['date'] = currency_data
+# print(validated_data_currency)
 
-url = 'https://api.privatbank.ua/p24api/exchange_rates?json&date=01.12.2014'
-response = requests.get(url)
-response.raise_for_status()
-currency_list = response.json()['exchangeRate']
-currency_data = response.json()['date']
 
-validated_curr = ["USD", "EUR"]
-validated_data_currency = []
-for curr in validated_curr:
-    for row in currency_list:
-        if curr in row['currency']:
-            validated_data_currency.append(row)
-            row['date'] = currency_data
-print(validated_data_currency)
+# import datetime
+#
+# d1 = datetime.date(2008,8,15)
+# d2 = datetime.date(2008,9,15)
+# diff = d2 - d1
+# for i in range(diff.days + 1):
+#     date = d1 + datetime.timedelta(i)
+#     print (date.isoformat()[:4], date.isoformat()[5:7], date.isoformat()[8:])
+
+import datetime
+
+date_start = datetime.date(2008, 8, 15)
+date_end = datetime.date(2009, 9, 15)
+
+date = date_start
+while True:
+    if date > date_end:
+        break
+    print(f'{date.isoformat()[8:]}.{date.isoformat()[5:7]}.{date.isoformat()[:4]}')
+    date += datetime.timedelta(days=1)
+
