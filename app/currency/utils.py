@@ -8,3 +8,7 @@ def to_decimal(number: str) -> Decimal:
 def valid_number(number):
     new_number = max([float(i) for i in number.replace(',', '.').split()])
     return new_number
+
+
+def valid_parse_date(date):
+    return f'{date.isoformat()[8:]}.{date.isoformat()[5:7]}.{date.isoformat()[:4]}'
