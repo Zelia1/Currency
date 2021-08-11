@@ -1,7 +1,9 @@
-from currency.views import (BankCreateView, BankDeleteView, BankDetailView, BankUpdateView, BanksListView,
-                            ContactDeleteView, ContactUsCreateView, ContactUsListView,
-                            ContactUsUpdateView, ContactusDetailView, RateArchiveListView, RateCreateView, RateDeleteView, RateDetailView,
-                            RateListView, RateUpdateView)
+from currency.views import (
+    BankCreateView, BankDeleteView, BankDetailView, BankUpdateView, BanksListView,
+    ContactDeleteView, ContactUsCreateView, ContactUsListView,
+    ContactUsUpdateView, ContactusDetailView, RateArchiveListView, RateCreateView,
+    RateDeleteView, RateDetailView,RateListView, RateUpdateView
+)
 
 from django.urls import path
 

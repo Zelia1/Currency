@@ -1,7 +1,6 @@
 import random
 
 from currency.models import Rate
-
 from django.core.management.base import BaseCommand
 
 

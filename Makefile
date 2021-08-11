@@ -31,3 +31,6 @@ pytest:
 
 show-coverage:  ## open coverage HTML report in default browser
 	python3 -c "import webbrowser; webbrowser.open('.pytest_cache/coverage/index.html')"
+
+parser-rate-archive:
+	$(manage_py) parser_rate_archive
