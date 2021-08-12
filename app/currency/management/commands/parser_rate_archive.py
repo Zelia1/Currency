@@ -13,7 +13,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        date_start = datetime.date(2014, 12, 1)
+        date_start = datetime.date(2017, 8, 23)
         date_end = datetime.date(2021, 8, 10)
         date = date_start
         # date_parse = valid_parse_date(date)
@@ -35,11 +35,11 @@ class Command(BaseCommand):
             for curr in available_currency_type:
                 currencies_type = available_currency_type[curr]
                 for row in currency_list:
-                    if curr in row['currency']:
+                    if curr in row['currency'] and 'saleRate' in row:
                         sale = to_decimal(row['saleRate'])
                         buy = to_decimal(row['purchaseRate'])
 
-                        previous_rate = RateArchive.objects.filter(date=currency_data, type=currencies_type)\
+                        previous_rate = RateArchive.objects.filter(type=currencies_type)\
                             .order_by('created').last()
 
                         if (
