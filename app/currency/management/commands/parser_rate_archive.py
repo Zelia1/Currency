@@ -13,8 +13,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        date_start = datetime.date(2017, 8, 23)
-        date_end = datetime.date(2021, 8, 10)
+        date_start = datetime.date(2014, 12, 1)
+        date_end = datetime.date(2021, 8, 14)
         date = date_start
         # date_parse = valid_parse_date(date)
         bank_name = "Privatbank"
@@ -35,7 +35,11 @@ class Command(BaseCommand):
             for curr in available_currency_type:
                 currencies_type = available_currency_type[curr]
                 for row in currency_list:
-                    if curr in row['currency'] and 'saleRate' in row:
+                    if ("currency" in row and
+                            curr in row["currency"] and
+                            'saleRate' in row and
+                            'purchaseRate' in row):
+
                         sale = to_decimal(row['saleRate'])
                         buy = to_decimal(row['purchaseRate'])
 
