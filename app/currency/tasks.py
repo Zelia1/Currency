@@ -1,16 +1,11 @@
+import requests
 from bs4 import BeautifulSoup
-
 from celery import shared_task
-
 from currency import choices
 from currency import consts
 from currency.utils import to_decimal, valid_number
-
 from django.core.mail import send_mail
-
 from fake_useragent import UserAgent
-
-import requests
 
 
 def _get_privatbank_currencies(url):
