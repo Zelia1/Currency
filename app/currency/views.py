@@ -1,5 +1,5 @@
 from currency.forms import BankForm, ContactUsForm, RateForm
-from currency.models import Banks, ContactUs, Rate, RateArchive  # noqa
+from currency.models import Banks, ContactUs, Rate  # noqa
 from currency.tasks import send_email_contactus
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -126,9 +126,3 @@ class RateCreateView(CreateView):
 
 def index(request):
     return render(request, 'index.html')
-
-
-class RateArchiveListView(ListView):
-    template_name = 'rate_archive_list.html'
-    queryset = RateArchive.objects.all()
-

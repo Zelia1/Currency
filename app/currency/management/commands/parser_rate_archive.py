@@ -1,11 +1,13 @@
 import datetime
+from datetime import datetime as dt
 from time import sleep
 
 import requests
 from currency import choices
-from currency.models import RateArchive
+from currency.models import Rate, Banks
 from currency.utils import valid_parse_date, to_decimal
 from django.core.management.base import BaseCommand
+from currency import consts
 
 
 class Command(BaseCommand):
@@ -14,10 +16,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         date_start = datetime.date(2014, 12, 1)
-        date_end = datetime.date(2021, 8, 14)
+        date_end = dt.now().date()
         date = date_start
-        # date_parse = valid_parse_date(date)
-        bank_name = "Privatbank"
 
         available_currency_type = {
             'USD': choices.RATE_TYPE_USD,
@@ -25,9 +25,9 @@ class Command(BaseCommand):
         }
 
         while True:
-            date_parse = valid_parse_date(date)
-            url = f'https://api.privatbank.ua/p24api/exchange_rates?json&date={date_parse}'
-            response = requests.get(url)
+            date_parse = f'json&date={valid_parse_date(date)}'
+            url = 'https://api.privatbank.ua/p24api/exchange_rates'
+            response = requests.get(url, params=date_parse)
             response.raise_for_status()
             currency_list = response.json()['exchangeRate']
             currency_data = response.json()['date']
@@ -42,8 +42,9 @@ class Command(BaseCommand):
 
                         sale = to_decimal(row['saleRate'])
                         buy = to_decimal(row['purchaseRate'])
+                        bank = Banks.objects.get(code_name=consts.CODE_NAME_PRIVATBANK)
 
-                        previous_rate = RateArchive.objects.filter(type=currencies_type)\
+                        previous_rate = Rate.objects.filter(date=currency_data, type=currencies_type)\
                             .order_by('created').last()
 
                         if (
@@ -52,8 +53,8 @@ class Command(BaseCommand):
                                 previous_rate.buy != buy
                         ):
 
-                            RateArchive.objects.create(
-                                name=bank_name,
+                            Rate.objects.create(
+                                bank=bank,
                                 type=currencies_type,
                                 sale=sale,
                                 buy=buy,

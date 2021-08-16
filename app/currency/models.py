@@ -37,6 +37,7 @@ class Rate(models.Model):
     sale = models.DecimalField(max_digits=5, decimal_places=2)
     buy = models.DecimalField(max_digits=5, decimal_places=2)
     created = models.DateTimeField(auto_now_add=True)
+    date = models.CharField(max_length=20)
     bank = models.ForeignKey(
         Banks,
         on_delete=models.CASCADE,
@@ -50,12 +51,3 @@ class Analytics(models.Model):
     path = models.CharField(max_length=255)
     status_code = models.CharField(max_length=3)
     create = models.DateTimeField(auto_now_add=True, null=True)
-
-
-class RateArchive(models.Model):
-    name = models.CharField(max_length=64)
-    type = models.PositiveSmallIntegerField(choices=choices.RATE_TYPE_CHOICES)  # noqa
-    sale = models.DecimalField(max_digits=5, decimal_places=2)
-    buy = models.DecimalField(max_digits=5, decimal_places=2)
-    date = models.CharField(max_length=20)
-    created = models.DateTimeField(auto_now_add=True)

@@ -16,7 +16,8 @@
             <th scope="col">Sale</th>
             <th scope="col">Buy</th>
             <th scope="col">Source Name</th>
-            <th scope="col">create</th>
+            <th scope="col">Date</th>
+            <th scope="col">Create</th>
             <th scope="col">Details</th>
             <th scope="col">Edit</th>
         </tr>
@@ -30,6 +31,7 @@
                 <td>{{ rate.sale }}</td>
                 <td>{{ rate.buy }}</td>
                 <td>{{ rate.bank.name }}</td>
+                <td>{{ rate.date }}</td>
                 <td>{{ rate.created }}</td>
                 {% if request.user.is_authenticated %}
                     <td>

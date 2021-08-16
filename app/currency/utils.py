@@ -11,4 +11,11 @@ def valid_number(number):
 
 
 def valid_parse_date(date):
+    # valid_date = {
+    #     'day': date.isoformat()[8:],
+    #     'month': date.isoformat()[5:7],
+    #     'year': date.isoformat()[:4]
+    # }
+    #
+    # return valid_date
     return f'{date.isoformat()[8:]}.{date.isoformat()[5:7]}.{date.isoformat()[:4]}'
