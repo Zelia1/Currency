@@ -1,14 +1,27 @@
 {% extends 'base.html' %}
+{% load pagination %}
+{% load crispy_forms_filters %}
 
 {% block main_html_form %}
 {{ message }}
 
 
-<a href="{% url 'currency:rate-create' %}" class="btn btn-outline-success btn-sm btn-block" role="button" aria-pressed="true"><h2 >Create Rate</h2></a>
+<a href="{% url 'currency:rate-create' %}" class="btn btn-outline-success btn-sm btn-block" role="button"
+   aria-pressed="true"><h2>Create Rate</h2></a>
 
-<table class="table table-striped">
-    <caption>List of users</caption>
-    <thead>
+    <form method="get">
+        {{ filter.form|crispy}}
+        <button type="submit" class="btn btn-primary">
+            <span class="glyphicon glyphicon-search"></span> Apply Filters
+        </button>
+    </form>
+
+    {% if is_paginated %}
+        {% pagination page_obj %}
+    {% endif %}
+    <table class="table table-striped">
+        <caption>List of users</caption>
+        <thead>
         <tr>
             <th scope="col">#</th>
             <th scope="col">Id</th>
@@ -21,33 +34,37 @@
             <th scope="col">Details</th>
             <th scope="col">Edit</th>
         </tr>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
         {% for rate in rate_list %}
-            <tr>
-                <th scope="row">{{ forloop.counter }}</th>
-                <td>{{ rate.id }}</td>
-                <td>{{ rate.get_type_display }}</td>
-                <td>{{ rate.sale }}</td>
-                <td>{{ rate.buy }}</td>
-                <td>{{ rate.bank.name }}</td>
-                <td>{{ rate.date }}</td>
-                <td>{{ rate.created }}</td>
-                {% if request.user.is_authenticated %}
-                    <td>
-                        <a href="{% url 'currency:rate-details' rate.id %}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Details</a>
-                    </td>
-                {% endif %}
-                {% if request.user.is_superuser %}
-                    <td>
-                        <a href="{% url 'currency:rate-update' rate.id %}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Edit</a>
-                    </td>
-                {% endif %}
-            </tr>
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ rate.id }}</td>
+            <td>{{ rate.get_type_display }}</td>
+            <td>{{ rate.sale }}</td>
+            <td>{{ rate.buy }}</td>
+            <td>{{ rate.bank.name }}</td>
+            <td>{{ rate.date }}</td>
+            <td>{{ rate.created }}</td>
+            {% if request.user.is_authenticated %}
+            <td>
+                <a href="{% url 'currency:rate-details' rate.id %}" class="btn btn-primary btn-sm active" role="button"
+                   aria-pressed="true">Details</a>
+            </td>
+            {% endif %}
+            {% if request.user.is_superuser %}
+            <td>
+                <a href="{% url 'currency:rate-update' rate.id %}" class="btn btn-primary btn-sm active" role="button"
+                   aria-pressed="true">Edit</a>
+            </td>
+            {% endif %}
+        </tr>
         {% endfor %}
 
-    </tbody>
-</table>
+        </tbody>
+    </table>
+
+
 
 {% endblock main_html_form %}
 

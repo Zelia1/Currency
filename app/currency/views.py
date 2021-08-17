@@ -1,10 +1,12 @@
 from currency.forms import BankForm, ContactUsForm, RateForm
 from currency.models import Banks, ContactUs, Rate  # noqa
 from currency.tasks import send_email_contactus
+from currency.filters import RateFilter
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, DetailView,
                                   ListView, UpdateView, )
+from django_filters.views import FilterView
 
 
 class BanksListView(ListView):
@@ -83,9 +85,11 @@ class BankDeleteView(DeleteView):
     success_url = reverse_lazy('currency:banks')
 
 
-class RateListView(ListView):
+class RateListView(FilterView):
     template_name = 'rate_list.html'
     queryset = Rate.objects.all().select_related('bank')
+    paginate_by = 25
+    filterset_class = RateFilter
 
 
 class RateUpdateView(UpdateView):
