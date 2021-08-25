@@ -1,6 +1,8 @@
 amqp==5.0.6
 asgiref==3.3.4
 attrs==21.2.0
+automium==0.2.6
+automium-web==0.1.1
 backcall==0.2.0
 beautifulsoup4==4.9.3
 billiard==3.6.4.0
@@ -14,6 +16,7 @@ click-repl==0.2.0
 coreapi==2.3.3
 coreschema==0.0.4
 coverage==5.5
+Currency==0.1.2
 decorator==5.0.9
 Django==3.2.3
 django-admin-rangefilter==0.8.1
@@ -32,15 +35,19 @@ flake8==3.9.2
 flake8-builtins==1.5.3
 flake8-import-order==0.18.1
 flake8-print==4.0.0
+Flask==2.0.1
+gunicorn==20.1.0
 idna==2.10
 inflection==0.5.1
 iniconfig==1.1.1
 ipython==7.24.0
 ipython-genutils==0.2.0
+itsdangerous==2.0.1
 itypes==1.2.0
 jedi==0.18.0
 Jinja2==3.0.1
 kombu==5.1.0
+legacy==0.1.6
 MarkupSafe==2.0.1
 matplotlib-inline==0.1.2
 mccabe==0.6.1
@@ -74,5 +81,7 @@ toml==0.10.2
 traitlets==5.0.5
 uritemplate==3.0.1
 urllib3==1.26.6
+utils==1.0.1
 vine==5.0.0
 wcwidth==0.2.5
+Werkzeug==2.0.1
