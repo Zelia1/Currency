@@ -20,3 +20,7 @@ class User(AbstractUser):
         if self.avatar:
             return self.avatar.url
         return static('img/default-avatar.png')
+
+    def save(self, *args, **kwargs):
+        # self.email = self.email.lower()
+        super().save(*args, **kwargs)
