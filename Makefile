@@ -34,3 +34,6 @@ show-coverage:  ## open coverage HTML report in default browser
 
 parser-rate-archive:
 	$(manage_py) parser_rate_archive
+
+uwsgi:
+	cd app && uwsgi --http :8000 --module settings.wsgi --processes=4

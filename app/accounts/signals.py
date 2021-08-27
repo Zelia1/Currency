@@ -10,4 +10,3 @@ def pre_save_user(sender, instance, **kwargs):
     # or
     # if instance.email:
     #     instance.email = instance.email.lower()
-
