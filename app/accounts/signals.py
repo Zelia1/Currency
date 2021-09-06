@@ -7,8 +7,6 @@ from django.dispatch import receiver
 def pre_save_user(sender, instance, **kwargs):
     if instance.USERNAME_FIELD == 'email':
         instance.email = instance.email.lower()
-        print("TRUE")
     # or
     # if instance.email:
     #     instance.email = instance.email.lower()
-
