@@ -1,6 +1,14 @@
 version: "3.3"
 
 services:
+
+  backend:
+    image: "backend-local"
+    build: .
+    container_name: backend
+    ports:
+      - "8000:8000"
+
   rabbitmq:
     image: rabbitmq
     container_name: rabbitmq
