@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-manage_py := python ./app/manage.py
+manage_py := docker exec -it backend python ./app/manage.py
 
 build:
 	docker-compose down && docker-compose up -d
