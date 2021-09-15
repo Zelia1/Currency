@@ -3,10 +3,10 @@ SHELL := /bin/bash
 manage_py := docker exec -it backend python ./app/manage.py
 
 build:
-	docker-compose down && docker-compose up -d
+	docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
 
 runserver:
-	$(manage_py) runserver
+	$(manage_py) runserver 0:8001
 
 createsuperuser:
 	$(manage_py) createsuperuser

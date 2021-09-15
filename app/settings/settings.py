@@ -270,6 +270,19 @@ STATICFILES_DIRS = [
     BASE_DIR / 'currency' / 'static',
 ]
 
+if DEBUG:
+    import socket
+
+    # debug tool_bar
+    DEBUG_TOOLBAR_PATCH_SETTINGS = True
+    INTERNAL_IPS = ['127.0.0.1']
+
+    # tricks to have debug toolbar when developing with docker
+    ip = socket.gethostbyname(socket.gethostname())
+    ip = '.'.join(ip.split('.')[:-1])
+    ip = f'{ip}.1'
+    INTERNAL_IPS.append(ip)
+
 try:
     from settings.settings_local import *  # noqa
 except ImportError:
