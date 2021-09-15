@@ -31,6 +31,20 @@ services:
     env_file:
       - .env
 
+  redis:
+    image: redis
+    expose:
+      - 6379
+
+  flower:
+    image: mher/flower
+    command: celery -A settings flower -l info --broker=redis://redis:6379 --port=5555
+    container_name: flower
+    stdin_open: true
+    tty: true
+    env_file:
+      - .env
+
   rabbitmq:
     image: rabbitmq:3.9.5-management-alpine
     container_name: rabbitmq
@@ -46,3 +60,20 @@ services:
       - "8080:8080"
       # - "80:80"
       - "443:443"
+    depends_on:
+      - flower
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    env_file:
+      - .env
+    tty: true
+    stdin_open: true
+    restart: always
+    ports:
+      - "${PGADMIN_LISTEN_PORT:-5050}:${PGADMIN_LISTEN_PORT:-5050}"
+    depends_on:
+      - postgres
+    links:
+      - postgres
