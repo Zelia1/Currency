@@ -32,21 +32,23 @@ services:
       - .env
 
   rabbitmq:
-    image: rabbitmq:3.9.5-management-alpine
+    image: rabbitmq:3.9.5-management
     container_name: rabbitmq
     env_file:
       - .env
 
   flower:
-    image: mher/flower:0.9.5
-    command: celery --broker=amqp://brokeruser:brokerpassword@localhost:5672// flower
-    #    celery -A --broker=amqp://brokeruser:brokerpassword@localhost:5672// flower
-    #    celery -A settings flower --broker=amqp://brokeruser:brokerpassword@localhost:5672//
+    image: mher/flower
+    command: celery --broker=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_DEFAULT_HOST}:${RABBITMQ_DEFAULT_PORT}// flower
+    #    celery --broker=amqp://brokeruser:brokerpassword@rabbitmq:5672// flower
     container_name: flower
     depends_on:
       - rabbitmq
+      - celery
     ports:
       - 5555:5555
+    env_file:
+      - .env
 
   #  flower:
   #      image: mher/flower:0.9.5
