@@ -38,26 +38,31 @@ services:
       - .env
 
   flower:
-    image: mher/flower
-    command: celery --broker=amqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_DEFAULT_HOST}:${RABBITMQ_DEFAULT_PORT}// flower
-    #    celery --broker=amqp://brokeruser:brokerpassword@rabbitmq:5672// flower
+    image: "backend-local"
+    command: celery flower -A settings tasks
+    build: .
     container_name: flower
-    depends_on:
-      - rabbitmq
-      - celery
-    ports:
-      - 5555:5555
+    stdin_open: true
+    tty: true
     env_file:
       - .env
+    ports:
+      - "5555:5555"
 
-  #  flower:
-  #      image: mher/flower:0.9.5
-  #      container_name: flower
-  #      environment:
-  #        - CELERY_BROKER_URL=amqp://brokeruser:brokerpassword@rabbitmq:5672//
-  #        - FLOWER_PORT=5555
-  #      ports:
-  #        - 5555:5555
+#  flower:
+#    image: mher/flower
+#    command: celery flower -A settings tasks
+##    celery -A worker --broker=amqp://${RABBITMQ_DEFAULT_USER}:\
+##    ${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_DEFAULT_HOST}:${RABBITMQ_DEFAULT_PORT}// flower
+#    #    celery --broker=amqp://brokeruser:brokerpassword@rabbitmq:5672// flower
+#    container_name: flower
+#    depends_on:
+#      - rabbitmq
+#      - celery
+#    ports:
+#      - "5555:5555"
+#    env_file:
+#      - .env
 
   nginx:
     image: nginx:1.19
@@ -68,8 +73,6 @@ services:
       - "8080:8080"
       # - "80:80"
       - "443:443"
-    depends_on:
-      - flower
 
   pgadmin:
     image: dpage/pgadmin4
@@ -85,3 +88,14 @@ services:
       - postgres
     links:
       - postgres
+
+  portainer:
+    image: portainer/portainer
+    container_name: portainer
+    restart: always
+    command: --no-auth
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /portainer_data:/data
+    ports:
+      - "9000:9000"
