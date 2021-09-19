@@ -1,12 +1,18 @@
 SHELL := /bin/bash
 
-manage_py := python ./app/manage.py
+manage_py := docker exec -it backend python ./app/manage.py
 
 build:
-	docker-compose down && docker-compose up -d
+	docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
+
+down:
+	docker-compose -f docker-compose.yml -f docker-compose.dev.yml down
 
 runserver:
-	$(manage_py) runserver
+	$(manage_py) runserver 0:8001
+
+collectstatic:
+	$(manage_py) collectstatic --noinput && docker cp backend:/tmp/static /tmp/static && docker cp /tmp/static nginx:/etc/nginx/static
 
 createsuperuser:
 	$(manage_py) createsuperuser
