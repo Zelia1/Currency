@@ -1,6 +1,5 @@
 import requests
 from filter import filter_word
-import re
 from bs4 import BeautifulSoup
 from writers import TxtWriter, CSVWriter, DbWriter, JSONWriter
 
@@ -21,10 +20,6 @@ writers_list = [
 while True:
 
     print(f'Page: {page}')
-
-    # TODO
-    if page == 2:
-        break
 
     params = {
         'page': page,
@@ -50,9 +45,7 @@ while True:
         for el in soup_job.find_all('div', 'card wordwrap'):
             data['href'] = url_job
             data['id'] = ''.join(char for char in href if char.isdigit())
-            data['title'] = el.find('h1').text
-            # work_address = el.find('p', {'class': 'text-indent add-top-sm'}).text.strip().split()[0]
-            # valid_address = filter_word(work_address)
+            data['title'] = filter_word(el.find('h1').text)
             try:
                 data['salary'] = ''.join(el.find('b', 'text-black').text.split())
             except:
@@ -62,17 +55,12 @@ while True:
             except:
                 data['work_address'] = None
 
-            # x = el.select('p')[6].text.strip()
             try:
-                data['description'] = [i.text.strip() for i in el.select('div#job-description')]
+                data['description'] = [filter_word(i.text.strip()) for i in el.select('div#job-description')]
             except:
                 data['description'] = None
         for writer in writers_list:
-            try:
-
-                writer.write(data)
-            except:
-                continue
+            writer.write(data)
 
     page += 1
 ######################################################################################################################

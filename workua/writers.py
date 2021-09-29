@@ -41,30 +41,34 @@ class DbWriter:
         self.cur = self.con.cursor()
 
     def write(self, item):
-        self.cur.execute(
-            "CREATE TABLE IF NOT EXISTS jobs ("
-            "id INTEGER NOT NULL PRIMARY KEY,"
-            "href VARCHAR(60),"
-            "jobs_id INTEGER,"
-            "title VARCHAR(200),"
-            "salary VARCHAR(50),"
-            "address VARCHAR(50),"
-            "description VARCHAR(5000)"
-            ");"
-        )
 
-        self.cur.execute(f'''INSERT INTO jobs VALUES (
+        sql_query_to_create_table = '''CREATE TABLE IF NOT EXISTS jobs (
+            id INTEGER NOT NULL PRIMARY KEY,
+            href VARCHAR(60),
+            jobs_id INTEGER,
+            title VARCHAR(200),
+            salary VARCHAR(50),
+            address VARCHAR(50),
+            description VARCHAR(5000)
+            );'''
+        self.cur.execute(sql_query_to_create_table)
+
+        sql_write_query = f'''INSERT INTO jobs VALUES (
         null,
         '{item['href']}',
         '{item['id']}',
         '{item['title']}',
         '{item['salary']}',
         '{item['work_address']}',
-        '{item['description']}'
-        )''')
-
+        '{item['description'][0]}'
+        )'''
+        try:
+            self.cur.execute(sql_write_query)
+        except Exception as exc:
+            error = exc
+            breakpoint()
         self.con.commit()
-        self.con.close()
+
 
         # self.cur.execute(
         #     f'''INSERT INTO jobs (
